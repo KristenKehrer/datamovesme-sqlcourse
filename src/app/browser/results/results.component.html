@@ -1,0 +1,20 @@
+<em style="margin: 15px;">results:</em>
+<div class="results">
+  <div class="alert alert-warning" *ngIf="message">{{message}}</div>
+  <div *ngFor="let result of _results" class="result">
+    <table class="table table-bordered table-sm">
+      <tr>
+        <th class="row-count-header">Row</th>
+        <th *ngFor="let column of result.columns">
+          {{column}}
+        </th>
+      </tr>
+      <tr *ngFor="let row of result.values; let i = index">
+        <td class="row-count">{{i+1}}</td>
+        <td *ngFor="let cell of row">
+          {{cell}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
