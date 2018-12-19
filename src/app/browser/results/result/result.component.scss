@@ -9,6 +9,16 @@ ag-grid-angular {
 
 .info {
   flex: 0 0 auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 8px;
+    border-left: 2px solid #B9D8D6;
+    border-top: 2px solid #B9D8D6;
+    border-right: 2px solid #B9D8D6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 3px 3px 3px 15px;
+    font-size: 13px;
 }
 
 .grid {
@@ -17,14 +27,4 @@ ag-grid-angular {
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
-}
-
-
-.row {
-  padding: 5px;
-  margin-top: 10px;
-  margin-bottom: 4px;
-  border: 2px solid #b9d8d7;
-  border-radius: 10px;
-  line-height: 37px;
 }

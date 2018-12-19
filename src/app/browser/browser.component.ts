@@ -1,12 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { DBResult } from '../types/dbResult';
-import * as FileSaver from 'file-saver';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
+import { DBResult } from '../types/dbResult'
+import * as FileSaver from 'file-saver'
 import { timer } from 'rxjs'
-import { SqliteService } from '../sqlite.service';
+import { SqliteService } from '../sqlite.service'
 import * as _ from 'lodash'
-import { HostListener } from '@angular/core';
+import { HostListener } from '@angular/core'
 
-const QUERY_KEY = "myquery"
+const QUERY_KEY = 'myquery'
 
 @Component({
   selector: 'app-browser',
@@ -15,15 +15,11 @@ const QUERY_KEY = "myquery"
 })
 export class BrowserComponent implements OnInit {
 
-  @HostListener('document:keypress', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.code === 'Enter' && !event.ctrlKey && event.shiftKey) { // "Shift + Enter"
-      this.run()
-      event.preventDefault()
-    } else if (event.code === 'Enter' && event.ctrlKey) { // "Ctrl + Enter"
-      this.runSelected()
-      event.preventDefault()
-    }
+  constructor(
+    private sql: SqliteService,
+    private changeDetector: ChangeDetectorRef) {
+    this.query = this.loadQuery() || 'select * from customer limit 10;'
+    timer(0, 1000).subscribe(() => this.saveQuery())
   }
 
   codemirrorOptions = {
@@ -37,11 +33,15 @@ export class BrowserComponent implements OnInit {
   results: DBResult
   running = false
 
-  constructor(
-    private sql: SqliteService,
-    private changeDetector: ChangeDetectorRef) {
-    this.query = this.loadQuery() || "select * from customer limit 10;"
-    timer(0, 1000).subscribe(() => this.saveQuery())
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.code === 'Enter' && !event.ctrlKey && event.shiftKey) { // "Shift + Enter"
+      this.run()
+      event.preventDefault()
+    } else if (event.code === 'Enter' && event.ctrlKey) { // "Ctrl + Enter"
+      this.runSelected()
+      event.preventDefault()
+    }
   }
 
   ngOnInit() {
@@ -53,7 +53,10 @@ export class BrowserComponent implements OnInit {
     this.changeDetector.detectChanges()
     setTimeout(() => {
       this.sql.runQuery(query)
-        .then(results => this.results = results)
+        .then(results => {
+          this.results = results
+          this.error = null
+        })
         .catch(e => {
           this.error = `Error: ${e.message}`
           console.log(e)
@@ -78,7 +81,7 @@ export class BrowserComponent implements OnInit {
 
   async export() {
     const exported = await this.sql.export()
-    FileSaver.saveAs(new Blob([exported]), "sqlite.db")
+    FileSaver.saveAs(new Blob([exported]), 'sqlite.db')
   }
 
   private saveQuery(): void {

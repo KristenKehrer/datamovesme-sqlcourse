@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { DBResult, RowSet } from 'src/app/types/dbResult';
+import { Component, OnInit, Input } from '@angular/core'
+import { DBResult, RowSet } from 'src/app/types/dbResult'
 import * as _ from 'lodash'
-import { ColDef } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community'
 
-const MAX_RESULTS = 1000000
+const MAX_RESULTS = 20000
 
 @Component({
   selector: 'app-result',
@@ -12,10 +12,10 @@ const MAX_RESULTS = 1000000
 })
 export class ResultComponent implements OnInit {
 
-  private rowData: any[]
-  private colDefs: ColDef[]
-  private rowCount: number
-  private missingRows: number
+  rowData: any[]
+  colDefs: ColDef[]
+  rowCount: number
+  missingRows: number
 
   constructor() { }
 
@@ -32,20 +32,22 @@ export class ResultComponent implements OnInit {
 
 
   private makeColDefs(data: RowSet): ColDef[] {
-    return _.map(data.columns, (col: string) => {
+    const colDefs = _.map(data.columns, (col: string) => {
       return {
         field: col
       }
     })
+    return [{ field: 'row', width: 80, cellClass: 'row-number-col' }, ...colDefs]
   }
 
   private makeRowData(data: RowSet): any[] {
     const gridRows = []
-    _.each(_.take(data.values, MAX_RESULTS), (row: any[]) => {
+    _.each(_.take(data.values, MAX_RESULTS), (row: any[], index: number) => {
       const gridRow: any = {}
       _.each(data.columns, (col: string, index: number) => {
         gridRow[col] = row[index]
       })
+      gridRow.row = index + 1
       gridRows.push(gridRow)
     })
     return gridRows

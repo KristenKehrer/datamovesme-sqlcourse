@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SchemaComponent } from './schema.component';
+import { SchemaComponent } from './schema.component'
 
 describe('SchemaComponent', () => {
-  let component: SchemaComponent;
-  let fixture: ComponentFixture<SchemaComponent>;
+  let component: SchemaComponent
+  let fixture: ComponentFixture<SchemaComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SchemaComponent ]
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SchemaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SchemaComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

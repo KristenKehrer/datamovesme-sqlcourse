@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { DBResult } from 'src/app/types/dbResult';
+import { Component, OnInit, Input } from '@angular/core'
+import { DBResult } from 'src/app/types/dbResult'
 import * as _ from 'lodash'
 
 @Component({

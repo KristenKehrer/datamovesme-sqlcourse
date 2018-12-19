@@ -1,9 +1,6 @@
-<div class="info container">
-  <div class="row">
-    <div class="col">
-      Rows Returned: {{rowCount}} <span *ngIf="missingRows"> - (result set too big, hiding {{missingRows}} rows)</span>
-    </div>
-  </div>
+<div class="info">
+  row count: <strong>{{rowCount}}</strong> <span *ngIf="missingRows"> - (result set too big, hiding {{missingRows}}
+    rows)</span>
 </div>
 <div class="grid">
   <ag-grid-angular [style.height.px]="gridHeight" class="ag-theme-blue" [rowData]="rowData" [columnDefs]="colDefs"></ag-grid-angular>

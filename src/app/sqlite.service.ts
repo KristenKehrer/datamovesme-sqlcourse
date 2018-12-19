@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { DBResult } from './types/dbResult';
-import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core'
+import { DBResult } from './types/dbResult'
+import { Location } from '@angular/common'
+import { HttpClient } from '@angular/common/http'
 
-declare const SQL: any;
+declare const SQL: any
 
 const DB_URL = '/assets/sqlcourse.db'
 
