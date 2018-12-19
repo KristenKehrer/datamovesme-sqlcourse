@@ -7,7 +7,7 @@
   "version": "0.0.0",
   "scripts": {
     "fix-gh-creds": "git config --global credential.helper wincred",
-    "git-kristen": "git remote set-url origin https://kristenkehrer@gmail.com:Change4153@github.com/KristenKehrer/datamovesme-sqlcourse.git",
+    "git-kristen": "git remote set-url origin https://github.com/KristenKehrer/datamovesme-sqlcourse.git",
     "git-paul": "git remote set-url origin https://github.com/pkehrer/datamovesme-sqlcourse.git",
     "make-db": "node sql/createsql",
     "make-asset-dir": "mkdirp dist/datamovesme-sqlcourse/assets/",
@@ -18,8 +18,8 @@
     "gh-build-paul": "ng build --prod --base-href https://pkehrer.github.io/datamovesme-sqlcourse/",
     "gh-build-kristen": "ng build --prod --base-href https://kristenkehrer.github.io/datamovesme-sqlcourse/",
     "gh-deploy": "angular-cli-ghpages -S --dir=dist/datamovesme-sqlcourse",
-    "deploy-kristen": "run-s git-kristen db gh-build-kristen gh-deploy",
-    "deploy-paul": "run-s git-paul db gh-build-paul gh-deploy"
+    "deploy-kristen": "run-s git-kristen gh-build-kristen db gh-deploy",
+    "deploy-paul": "run-s git-paul gh-build-paul db gh-deploy"
   },
   "private": true,
   "dependencies": {
