@@ -2,9 +2,29 @@
 }
 
 ag-grid-angular {
-  flex: 1 1 100%;
+  flex: 1 1;
+  width: 100%;
+  display: flex;
 }
 
 .info {
   flex: 0 0 auto;
+}
+
+.grid {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+
+.row {
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  border: 2px solid #b9d8d7;
+  border-radius: 10px;
+  line-height: 37px;
 }

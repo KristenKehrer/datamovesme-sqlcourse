@@ -3,7 +3,7 @@ import { DBResult, RowSet } from 'src/app/types/dbResult';
 import * as _ from 'lodash'
 import { ColDef } from 'ag-grid-community';
 
-const MAX_RESULTS = 10000
+const MAX_RESULTS = 1000000
 
 @Component({
   selector: 'app-result',
@@ -14,12 +14,18 @@ export class ResultComponent implements OnInit {
 
   private rowData: any[]
   private colDefs: ColDef[]
+  private rowCount: number
+  private missingRows: number
 
   constructor() { }
 
   @Input() set data(data: RowSet) {
     this.rowData = this.makeRowData(data)
     this.colDefs = this.makeColDefs(data)
+    this.rowCount = data.values.length
+    if (this.rowCount > MAX_RESULTS) {
+      this.missingRows = this.rowCount - MAX_RESULTS
+    }
   }
 
   @Input() query: string

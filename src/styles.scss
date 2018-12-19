@@ -4,7 +4,7 @@
 @import "~codemirror/theme/solarized.css";
 
 @import "~ag-grid-community/dist/styles/ag-grid.css";
-@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~ag-grid-community/dist/styles/ag-theme-blue";
 
 body {
   height: 100vh;
@@ -22,3 +22,8 @@ div.ag-root .ag-cell-focus {
 .ag-root-wrapper {
   flex: 1 1 auto;
 }
+.ag-theme-blue .ag-header {
+    background-color: #b9d8d7 !important;
+}
+
+

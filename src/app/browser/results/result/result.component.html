@@ -1,15 +1,10 @@
-<div class="info container-fluid">
-  <ng-template #popContent>
-    <p>{{query}}</p>
-  </ng-template>
-  <ng-template #popTitle><strong>query:</strong></ng-template>
+<div class="info container">
   <div class="row">
-    <div class="col-2 offset-3">
-      <button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent"
-        [popoverTitle]="popTitle">
-        View Query
-      </button>
+    <div class="col">
+      Rows Returned: {{rowCount}} <span *ngIf="missingRows"> - (result set too big, hiding {{missingRows}} rows)</span>
     </div>
   </div>
 </div>
-<ag-grid-angular [style.height.px]="gridHeight" class="ag-theme-balham" [rowData]="rowData" [columnDefs]="colDefs"></ag-grid-angular>
+<div class="grid">
+  <ag-grid-angular [style.height.px]="gridHeight" class="ag-theme-blue" [rowData]="rowData" [columnDefs]="colDefs"></ag-grid-angular>
+</div>
