@@ -33,6 +33,8 @@
     "@angular/router": "~7.1.0",
     "@ctrl/ngx-codemirror": "^1.3.9",
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
+    "ag-grid-angular": "^19.1.2",
+    "ag-grid-community": "^19.1.4",
     "angular-split": "^2.0.0",
     "bootstrap": "^4.1.3",
     "codemirror": "^5.42.0",

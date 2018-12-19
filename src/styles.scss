@@ -3,6 +3,22 @@
 @import "~codemirror/lib/codemirror.css";
 @import "~codemirror/theme/solarized.css";
 
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
 body {
   height: 100vh;
+}
+
+
+/* enable basic browser text selection in grid cells */
+div.ag-root .ag-cell-focus {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.ag-root-wrapper {
+  flex: 1 1 auto;
 }

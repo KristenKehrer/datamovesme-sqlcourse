@@ -7,7 +7,6 @@ import * as _ from 'lodash'
 import { HostListener } from '@angular/core';
 
 const QUERY_KEY = "myquery"
-const MAX_RESULTS = 10000
 
 @Component({
   selector: 'app-browser',
@@ -27,21 +26,26 @@ export class BrowserComponent implements OnInit {
     }
   }
 
+  codemirrorOptions = {
+    lineNumbers: true,
+    theme: 'solarized',
+    mode: 'sql'
+  }
+
   query: string
   error: string
-  results: DBResult[]
+  results: DBResult
   running = false
-
-  private db: any
 
   constructor(
     private sql: SqliteService,
     private changeDetector: ChangeDetectorRef) {
-    this.query = this.loadQuery() || "select * from person join pet on person.id = pet.ownerId;"
+    this.query = this.loadQuery() || "select * from customer limit 10;"
     timer(0, 1000).subscribe(() => this.saveQuery())
   }
 
   ngOnInit() {
+    this.run()
   }
 
   runQuery(query: string): void {
@@ -49,14 +53,7 @@ export class BrowserComponent implements OnInit {
     this.changeDetector.detectChanges()
     setTimeout(() => {
       this.sql.runQuery(query)
-        .then(results => {
-
-          if (_.some(results, (r: DBResult) => r.values.length > MAX_RESULTS)) {
-            throw new Error(`Query returned more than ${MAX_RESULTS} results!!`)
-          }
-          this.results = results
-          this.error = null
-        })
+        .then(results => this.results = results)
         .catch(e => {
           this.error = `Error: ${e.message}`
           console.log(e)
@@ -79,8 +76,8 @@ export class BrowserComponent implements OnInit {
     }
   }
 
-  export() {
-    const exported = this.db.export()
+  async export() {
+    const exported = await this.sql.export()
     FileSaver.saveAs(new Blob([exported]), "sqlite.db")
   }
 

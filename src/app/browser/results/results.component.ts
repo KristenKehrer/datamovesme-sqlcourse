@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DBResult } from 'src/app/types/dbResult';
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-results',
@@ -8,22 +9,20 @@ import { DBResult } from 'src/app/types/dbResult';
 })
 export class ResultsComponent implements OnInit {
 
-  _results: DBResult[]
+  _results: DBResult
   message: string
 
-  @Input() set results(results: DBResult[]) {
+  @Input() set results(results: DBResult) {
     this._results = results
-    console.log(this._results)
-    if (this._results && this._results.length === 0) {
+
+    if (_.get(this._results, 'rowSets') && this._results.rowSets.length === 0) {
       this.message = 'Query returned no results'
     } else {
       this.message = null
     }
   }
 
-  constructor() {
-
-  }
+  constructor() { }
 
   ngOnInit() {
   }

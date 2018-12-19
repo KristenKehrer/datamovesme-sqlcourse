@@ -2,11 +2,7 @@
 <h3 style="text-align: center">SQLite Browser</h3>
 <as-split direction="vertical">
   <as-split-area size="40" style="min-height:100px;">
-    <ngx-codemirror [(ngModel)]="query" [options]="{
-      lineNumbers: true,
-      theme: 'solarized',
-      mode: 'sql'
-    }"></ngx-codemirror>
+    <ngx-codemirror [(ngModel)]="query" [options]="codemirrorOptions"></ngx-codemirror>
     <div class="buttons">
       <ng-template #popContent>
         <ul>
@@ -30,7 +26,7 @@
     <div class="container">
       <div class="alert alert-danger" *ngIf="error">{{error}}</div>
     </div>
-    <app-results [results]="results">
+    <app-results *ngIf="results" [results]="results">
     </app-results>
   </as-split-area>
 </as-split>

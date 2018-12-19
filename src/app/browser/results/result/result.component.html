@@ -1,0 +1,15 @@
+<div class="info container-fluid">
+  <ng-template #popContent>
+    <p>{{query}}</p>
+  </ng-template>
+  <ng-template #popTitle><strong>query:</strong></ng-template>
+  <div class="row">
+    <div class="col-2 offset-3">
+      <button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent"
+        [popoverTitle]="popTitle">
+        View Query
+      </button>
+    </div>
+  </div>
+</div>
+<ag-grid-angular [style.height.px]="gridHeight" class="ag-theme-balham" [rowData]="rowData" [columnDefs]="colDefs"></ag-grid-angular>

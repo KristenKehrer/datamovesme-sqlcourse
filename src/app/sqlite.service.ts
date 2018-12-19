@@ -20,9 +20,10 @@ export class SqliteService {
     this.db = this.retrieveDB()
   }
 
-  async runQuery(query: string): Promise<DBResult[]> {
+  async runQuery(query: string): Promise<DBResult> {
     const db = await this.db
-    return db.exec(query)
+    const rowSets = db.exec(query)
+    return { query, rowSets }
   }
 
   private async retrieveDB(): Promise<any> {
@@ -31,5 +32,10 @@ export class SqliteService {
       .toPromise()
     const arr = new Uint8Array(response)
     return new SQL.Database(arr)
+  }
+
+  async export(): Promise<any> {
+    const db = await this.db
+    return db.export()
   }
 }
