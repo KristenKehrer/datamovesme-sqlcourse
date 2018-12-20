@@ -1,4 +1,4 @@
-sql/*.sql
+sql/dist_sql
 sql/*.db
 src/assets/sqlcourse.db
 

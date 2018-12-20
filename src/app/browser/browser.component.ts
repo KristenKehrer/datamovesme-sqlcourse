@@ -45,7 +45,7 @@ export class BrowserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.run()
+    //this.run()  // uncomment this and the app will execute the saved query on startup
   }
 
   runQuery(query: string): void {

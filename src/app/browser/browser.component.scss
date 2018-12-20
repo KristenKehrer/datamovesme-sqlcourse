@@ -5,6 +5,22 @@
   align-items: center;
 }
 
+.top-panel {
+  min-height:100px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+app-schema {
+  overflow: auto;
+}
+
+app-schema, .spacer {
+  width: 300px;
+}
+
 app-results {
 }
 

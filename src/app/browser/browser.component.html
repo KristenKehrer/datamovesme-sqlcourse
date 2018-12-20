@@ -1,26 +1,30 @@
 <img src="https://datamovesme.com/wp-content/uploads/2018/06/cropped-logo-2.png">
 <h3 style="text-align: center">SQLite Browser</h3>
 <as-split direction="vertical">
-  <as-split-area size="40" style="min-height:100px;">
-    <ngx-codemirror [(ngModel)]="query" [options]="codemirrorOptions"></ngx-codemirror>
-    <div class="buttons">
-      <ng-template #popContent>
-        <ul>
-          <li>SHIFT + ENTER: Run entire query</li>
-          <li>CTRL + ENTER: Run current selection</li>
-        </ul>
-      </ng-template>
-      <ng-template #popTitle><strong>Hotkeys:</strong></ng-template>
-      <button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent"
-        [popoverTitle]="popTitle">
-        Help
-      </button>
+  <as-split-area size="40" class="top-panel">
+    <app-schema></app-schema>
+    <div class="editor">
+      <ngx-codemirror [(ngModel)]="query" [options]="codemirrorOptions"></ngx-codemirror>
+      <div class="buttons">
+        <ng-template #popContent>
+          <ul>
+            <li>SHIFT + ENTER: Run entire query</li>
+            <li>CTRL + ENTER: Run current selection</li>
+          </ul>
+        </ng-template>
+        <ng-template #popTitle><strong>Hotkeys:</strong></ng-template>
+        <button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent"
+          [popoverTitle]="popTitle">
+          Help
+        </button>
 
-      <!--<button class="btn btn-info" (click)="export()">Export</button>-->
-      <button class="btn btn-info" title="CTRL + ENTER" [disabled]="running" (click)="runSelected()">Run Selection</button>
-      <button class="btn btn-primary" title="SHIFT + ENTER" [disabled]="running" (click)="run()">Run</button>
-      <app-spinner *ngIf="running"></app-spinner>
+        <button class="btn btn-info" title="CTRL + ENTER" [disabled]="running" (click)="runSelected()">Run Selection</button>
+        <button class="btn btn-primary" title="SHIFT + ENTER" [disabled]="running" (click)="run()">Run</button>
+        <app-spinner *ngIf="running"></app-spinner>
+      </div>
+
     </div>
+    <div class="spacer"></div>
   </as-split-area>
   <as-split-area size="60">
     <div class="container">

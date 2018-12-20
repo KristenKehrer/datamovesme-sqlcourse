@@ -12,7 +12,12 @@ const schema = {
   }
 }
 
-const url = args.kristen ? packageJson.repository.url : args.paul ? packageJson.alternateRepository.url : null
+const url = args.kristen ?
+  packageJson.repository.url :
+  args.paul ?
+    packageJson.alternateRepository.url :
+    null
+
 if (!url) {
   console.error('Call load-git with --kristen or --paul')
   process.exit(1)
