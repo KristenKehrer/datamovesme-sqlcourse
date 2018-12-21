@@ -69,7 +69,7 @@ async function getTableSchema(csvName) {
 ${_.join(columns, ',\n')}
   );`
   const insert = `INSERT INTO ${tableName} VALUES`
-  return { createTable, insert, indices: getIndices(tableName, _.keys(csvjson[0])) }
+  return { createTable, insert, /*indices: getIndices(tableName, _.keys(csvjson[0]))*/ }
 }
 
 function getIndices(tableName, columns) {
