@@ -28,7 +28,11 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/theme/solarized.css",
+              "node_modules/ag-grid-community/dist/styles/ag-grid.css",
+              "node_modules/ag-grid-community/dist/styles/ag-theme-blue.css"
             ],
             "scripts": [
               "node_modules/sql.js/js/sql.js"

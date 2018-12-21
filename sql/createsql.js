@@ -2,7 +2,7 @@ const _ = require('lodash'),
   path = require('path'),
   fs = require('fs'),
   Bluebird = require('bluebird'),
-  sqlite = require('sqlite'),
+  sqlite3 = require('sqlite3'),
   { deleteIfExists, isNotANumber, loadCsv } = require('./util')
 
 const INSERT_BATCH_SIZE = 10000
@@ -11,35 +11,41 @@ const SQL_DIR = path.join(__dirname, 'dist_sql')
 const DB_PATH = path.join(__dirname, 'sqlcourse.db')
 
 async function run() {
-  const csvs = getFiles()
-  const db = await createDb()
+  const csvs = getCsvFiles()
+  const db = await createSqliteDb()
   deleteIfExists(SQL_DIR)
   fs.mkdirSync(SQL_DIR)
   await Bluebird.map(csvs, async (csvname) => {
     const sqlstring = await csvToSql(csvname)
     fs.writeFileSync(path.join(SQL_DIR, `${csvname.replace('.csv', '.sql')}`), sqlstring)
-    runSql(db, sqlstring)
+    await runSql(db, sqlstring)
   })
   await db.close()
   console.log('Complete!')
 }
 
-function runSql(db, sqlstring) {
-  _.each(_.split(sqlstring, ';\n'), sqlstatement => db.exec(sqlstatement))
+async function runSql(db, sqlstring) {
+  await Bluebird.map(_.split(sqlstring, ';\n'), stmt => new Bluebird((res, rej) => {
+    db.exec(stmt, function (err) {
+      if (err) { rej(err) }
+      res()
+    })
+  }))
 }
 
-async function createDb() {
+function createSqliteDb() {
   deleteIfExists(DB_PATH)
-  const db = await sqlite.open(DB_PATH, { promise: Bluebird })
-  db.on('error', error => {
-    console.error('Uh oh! Database error!!!!')
-    console.error(error)
-    process.exit(1)
+  return new Bluebird((res, rej) => {
+    const db = new sqlite3.Database(DB_PATH, err => {
+      if (err) {
+        rej(err)
+      }
+      res(db)
+    })
   })
-  return db
 }
 
-function getFiles() {
+function getCsvFiles() {
   const dirFiles = fs.readdirSync(CSV_DIR)
   const csvs = _.filter(dirFiles, f => _.endsWith(f, '.csv'))
   return csvs
@@ -47,31 +53,38 @@ function getFiles() {
 
 async function getTableSchema(csvName) {
   const csvjson = await loadCsv(path.join(CSV_DIR, csvName))
-
   const columns = _.map(_.keys(csvjson[0]), columnName => {
+    sqlColName = columnName.replace(' ', '')
     const dataValue = _.find(csvjson, row => !_.isNil(row[columnName]))[columnName]
     if (isNotANumber(dataValue)) {
-      return `    ${columnName} TEXT`
+      return `    ${sqlColName} TEXT`
     }
     if (_.isInteger(_.toNumber(dataValue))) {
-      return `    ${columnName} INTEGER`
+      return `    ${sqlColName} INTEGER`
     }
-    return `    ${columnName} REAL`
+    return `    ${sqlColName} REAL`
   })
   const tableName = csvName.replace('.csv', '')
   const createTable = `CREATE TABLE ${tableName} (
 ${_.join(columns, ',\n')}
   );`
   const insert = `INSERT INTO ${tableName} VALUES`
-  return { createTable, insert }
+  return { createTable, insert, indices: getIndices(tableName, _.keys(csvjson[0])) }
 }
 
+function getIndices(tableName, columns) {
+  const statements = _.map(columns, col => {
+    col = col.replace(' ', '')
+    return `CREATE INDEX idx_${tableName}_${col} ON ${tableName}(${col});`
+  })
+  return _.join(statements, '\n')
+}
 
 async function csvToSql(csvname) {
   const schema = await getTableSchema(csvname)
   const csvjson = await loadCsv(path.join(CSV_DIR, csvname))
   const chunks = _.chunk(csvjson, INSERT_BATCH_SIZE)
-  const statements = [schema.createTable]
+  const statements = [schema.createTable, schema.indices]
 
   _.each(chunks, rows => {
     statements.push(schema.insert)
@@ -97,4 +110,8 @@ async function csvToSql(csvname) {
   return _.join(statements, '\n')
 }
 
-run()
+run().catch(error => {
+  console.log("*** ERROR ***")
+  console.log(error.toString())
+  process.exit(1)
+})

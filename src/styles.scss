@@ -1,15 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~codemirror/lib/codemirror.css";
-@import "~codemirror/theme/solarized.css";
-
-@import "~ag-grid-community/dist/styles/ag-grid.css";
-@import "~ag-grid-community/dist/styles/ag-theme-blue";
-
 body {
   height: 100vh;
 }
-
 
 /* enable basic browser text selection in grid cells */
 div.ag-root .ag-cell-focus {

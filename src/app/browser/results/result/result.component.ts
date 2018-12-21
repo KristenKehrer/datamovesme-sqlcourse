@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { DBResult, RowSet } from 'src/app/types/dbResult'
 import * as _ from 'lodash'
-import { ColDef } from 'ag-grid-community'
+import { ColDef, GridOptions } from 'ag-grid-community'
 
 const MAX_RESULTS = 20000
 
@@ -14,6 +14,9 @@ export class ResultComponent implements OnInit {
 
   rowData: any[]
   colDefs: ColDef[]
+  gridOptions: GridOptions = {
+    enableColResize: true
+  }
   rowCount: number
   missingRows: number
 

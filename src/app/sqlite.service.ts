@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { DBResult } from './types/dbResult'
 import { Location } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
+import * as JSZip from 'jszip'
 
 declare const SQL: any
 
