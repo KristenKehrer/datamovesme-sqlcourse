@@ -13,7 +13,8 @@ import { BrowserComponent } from './browser/browser.component'
 import { ResultsComponent } from './browser/results/results.component'
 import { SchemaComponent } from './browser/schema/schema.component'
 import { SpinnerComponent } from './spinner/spinner.component'
-import { ResultComponent } from './browser/results/result/result.component'
+import { ResultComponent } from './browser/results/result/result.component';
+import { EditorComponent } from './browser/editor/editor.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ResultComponent } from './browser/results/result/result.component'
     ResultsComponent,
     SchemaComponent,
     SpinnerComponent,
-    ResultComponent
+    ResultComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,

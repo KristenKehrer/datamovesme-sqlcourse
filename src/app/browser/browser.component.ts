@@ -5,6 +5,7 @@ import { timer } from 'rxjs'
 import { SqliteService } from '../sqlite.service'
 import * as _ from 'lodash'
 import { HostListener } from '@angular/core'
+import { EditorData } from './editor/editor.component';
 
 const QUERY_KEY = 'myquery'
 
@@ -22,16 +23,14 @@ export class BrowserComponent implements OnInit {
     timer(0, 1000).subscribe(() => this.saveQuery())
   }
 
-  codemirrorOptions = {
-    lineNumbers: true,
-    theme: 'solarized',
-    mode: 'sql'
-  }
-
   query: string
   error: string
   results: DBResult
   running = false
+
+  onQueryChanged(query: string) {
+    this.query = query
+  }
 
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {

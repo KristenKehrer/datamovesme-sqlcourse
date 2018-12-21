@@ -29,6 +29,7 @@ export class SchemaComponent implements OnInit {
 
   constructor(private sql: SqliteService) {
     this.loadSchema()
+    //this.schema = []
   }
 
   private async loadSchema() {

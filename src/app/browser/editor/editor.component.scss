@@ -1,0 +1,63 @@
+:host,
+ngb-tabset {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host /deep/ .tab-content, :host /deep/ .tab-pane, ngx-codemirror {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+:host /deep/ .CodeMirror {
+  border: 1.5px solid gray;
+  border-radius: 5px;
+  width:100%;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+:host /deep/ .CodeMirror-scroll {
+  flex: 1 1 auto;
+}
+
+.codemirror-wrapper {
+  flex: 1 1 auto;
+  background-color: lightblue;
+}
+
+:host /deep/ .nav {
+  flex: 0 0 auto;
+}
+
+.plus-link {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 10px;
+    background-color: #54c554;
+    padding: 0px 6px 4px 6px;
+    color: white !important;
+    border-radius: 15px;
+}
+
+.edit-button {
+  font-family: consolas;
+  margin-right: 10px;
+}
+
+.close-button {
+  font-weight: bold;
+  font-style:normal;
+  margin-left: 8px;
+  color: white;
+    margin-left: 8px;
+    background-color: #bdb4b4;
+    padding: 0px 7px 4px;
+    border-radius: 18px;
+    vertical-align: top;
+}

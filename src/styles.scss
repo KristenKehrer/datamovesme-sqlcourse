@@ -15,12 +15,32 @@ div.ag-root .ag-cell-focus {
 .ag-root-wrapper {
   flex: 1 1 auto;
 }
+
 .ag-theme-blue .ag-header {
     background-color: #b9d8d7 !important;
 }
-
 
 .row-number-col {
   color: gray;
 }
 
+.nav-link {
+  border-left: .5px solid gray !important;
+  border-top: .5px solid gray !important;
+  border-right: .5px solid gray !important;
+  border-top-right-radius: 5px !important;
+  border-top-left-radius: 5px !important;
+  color: gray;
+  font-style: italic;
+}
+
+.nav-link.active {
+  background-color: #dcfbf9 !important;
+  font-style:normal;
+  font-weight: bold;
+  border-left: 1.5px solid gray !important;
+  border-top: 1.5px solid gray !important;
+  border-right: 1.5px solid gray !important;
+  border-top-right-radius: 5px !important;
+  border-top-left-radius: 5px !important;
+}

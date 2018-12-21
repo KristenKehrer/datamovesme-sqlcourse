@@ -10,7 +10,6 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  justify-content: space-between;
 }
 
 app-schema {
@@ -19,34 +18,33 @@ app-schema {
 
 app-schema, .spacer {
   width: 300px;
+  flex: 0 0 auto;
 }
 
-app-results {
+.editor {
+  display: flex;
+  flex: 1 1 auto;
+  margin-left: 100px;
+  margin-right: 100px;
+  min-width: 500px;
+  flex-direction: column;
+  overflow: auto;
 }
 
-.buttons, :host /deep/ .CodeMirror {
-  width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+ngb-tabset {
+  height: 100%;
 }
 
 .buttons {
   display: flex;
   flex-direction: row-reverse;
-  padding-top: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex: 0 0 40px;
 }
 
 .buttons > button {
   margin-left: 10px;
-}
-
-:host /deep/ .CodeMirror {
-  border: 1.5px solid gray;
-  border-radius: 5px;
-  height: calc(100% - 55px);
-  //font-family: 'Ubuntu Mono', monospace;
-  //font-size: 14pt;
-  resize: none;
 }
 
 as-split {
