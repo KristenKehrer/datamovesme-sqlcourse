@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, Injector } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
 import { DBResult } from '../types/dbResult'
 import * as FileSaver from 'file-saver'
 import { timer } from 'rxjs'
@@ -6,8 +6,6 @@ import { SqliteService } from '../sqlite.service'
 import * as _ from 'lodash'
 import { HostListener } from '@angular/core'
 import { EditorData } from './editor/editor.component';
-import { ISqlService } from '../sql.interface';
-import { MysqlService } from '../mysql.service';
 
 const QUERY_KEY = 'myquery'
 
@@ -18,11 +16,9 @@ const QUERY_KEY = 'myquery'
 })
 export class BrowserComponent implements OnInit {
 
-  private sql: ISqlService
   constructor(
-    injector: Injector,
+    private sql: SqliteService,
     private changeDetector: ChangeDetectorRef) {
-    this.sql = injector.get(MysqlService)
     this.query = this.loadQuery() || 'select * from customer limit 10;'
     timer(0, 1000).subscribe(() => this.saveQuery())
   }
@@ -61,7 +57,7 @@ export class BrowserComponent implements OnInit {
           this.error = null
         })
         .catch(e => {
-          this.error = e.errorMessage
+          this.error = `Error: ${e.message}`
           console.log(e)
         })
         .then(() => {

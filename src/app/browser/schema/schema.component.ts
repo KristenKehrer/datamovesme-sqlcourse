@@ -28,8 +28,8 @@ export class SchemaComponent implements OnInit {
   schema: SqliteTable[]
 
   constructor(private sql: SqliteService) {
-    //this.loadSchema()
-    this.schema = []
+    this.loadSchema()
+    //this.schema = []
   }
 
   private async loadSchema() {

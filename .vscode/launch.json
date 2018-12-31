@@ -5,17 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Launch chrome against localhost:4200",
-      "url": "http://localhost:4200",
-      "webRoot": "${workspaceFolder}"
-    },
-    {
       "type": "node",
       "request": "launch",
       "name": "Run Mysql Lambda",
-      "program": "${workspaceFolder}/lambda/runlocal"
+      "program": "${workspaceFolder}/lambda/runQuery"
     },
     {
       "type": "node",

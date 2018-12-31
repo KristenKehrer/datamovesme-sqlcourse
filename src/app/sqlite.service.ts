@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 import { DBResult } from './types/dbResult'
 import { Location } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
-import { ISqlService } from './sql.interface';
 
 declare const SQL: any
 
@@ -11,7 +10,7 @@ const DB_URL = '/assets/sqlcourse.db'
 @Injectable({
   providedIn: 'root'
 })
-export class SqliteService implements ISqlService {
+export class SqliteService {
 
   private db: Promise<any>
 
