@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { DBResult, RowSet } from 'src/app/types/dbResult'
 import * as _ from 'lodash'
-import { ColDef, GridOptions } from 'ag-grid-community'
+import { ColDef, GridOptions, ValueGetterParams } from 'ag-grid-community'
 
 const MAX_RESULTS = 20000
 
@@ -35,25 +35,22 @@ export class ResultComponent implements OnInit {
 
 
   private makeColDefs(data: RowSet): ColDef[] {
-    const colDefs = _.map(data.columns, (col: string) => {
+    const colDefs = _.map(data.columns, (col: string, index: number) => {
       return {
-        field: col
+        headerName: col,
+        valueGetter: (params: ValueGetterParams) => params.data.rowData[index]
       }
     })
-    return [{ field: 'row', width: 80, cellClass: 'row-number-col' }, ...colDefs]
+    return [{ headerName: 'row', field: 'rowIndex', width: 80, cellClass: 'row-number-col' }, ...colDefs]
   }
 
   private makeRowData(data: RowSet): any[] {
-    const gridRows = []
-    _.each(_.take(data.values, MAX_RESULTS), (row: any[], index: number) => {
-      const gridRow: any = {}
-      _.each(data.columns, (col: string, index: number) => {
-        gridRow[col] = row[index]
-      })
-      gridRow.row = index + 1
-      gridRows.push(gridRow)
+    return _.map(_.take(data.values, MAX_RESULTS), (row: any[], index: number) => {
+      return {
+        rowData: row,
+        rowIndex: index + 1
+      }
     })
-    return gridRows
   }
 
   ngOnInit() {

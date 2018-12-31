@@ -7,12 +7,13 @@ const CONNECTION_CONFIG = {
   port: 3306,
   user: 'pkehrer',
   password: '!stan1eyPOO',
-  database: 'datamovesmesqlcourse'
+  database: 'datamovesmesqlcourse',
+  multipleStatements: true
 }
 
 function run(connection, query) {
   return new Promise((res, rej) => {
-    connection.query(query, function (error, results, fields) {
+    connection.query({ sql: query, nestTables: true }, function (error, results, fields) {
       if (error) { return rej(error) }
       res({ results, fields })
     })
@@ -36,5 +37,3 @@ module.exports.runQuery = async function (event, context) {
 
   return { results: result.results, fields: result.fields }
 }
-
-//module.exports.runQuery().then(r => console.log(JSON.stringify(r, null, 2)))
