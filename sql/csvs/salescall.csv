@@ -17650,7 +17650,7 @@ Customer_id,Call_Opened,Call_Closed,Case_Number,Resolution,Call_Type,Call_Type_S
 408625,9/9/2016,9/12/2016,18926968,Contact,Customer Success,System Overview
 408626,9/14/2016,9/14/2016,18957810,Contact,Customer Success,System Overview
 408627,9/9/2016,9/22/2016,18930003,Contact,Customer Success,System Overview
-408628,9/21/2016,9/23/2016,19007045,Contact,CTCT Communication Preferences,System Overview
+408628,9/21/2016,9/23/2016,19007045,Contact, Communication Preferences,System Overview
 408629,9/12/2016,9/13/2016,18943224,Contact,Customer Success,System Overview
 408630,9/13/2016,9/15/2016,18952132,Contact,Customer Success,System Overview
 408631,9/8/2016,9/13/2016,18921118,Contact,Customer Success,System Overview
@@ -17794,7 +17794,7 @@ Customer_id,Call_Opened,Call_Closed,Case_Number,Resolution,Call_Type,Call_Type_S
 408769,9/15/2016,9/19/2016,18971420,Contact,Customer Success,System Overview
 408770,10/18/2016,10/26/2016,19170309,Contact,Customer Success,System Overview
 408771,11/29/2016,12/6/2016,19430129,Contact,Customer Success,System Overview
-408772,9/14/2016,9/16/2016,18956867,Contact,CTCT Communication Preferences,System Overview
+408772,9/14/2016,9/16/2016,18956867,Contact, Communication Preferences,System Overview
 408773,9/15/2016,9/19/2016,18965607,Contact,Customer Success,System Overview
 408774,9/29/2016,9/29/2016,19057678,Contact,Customer Success,System Overview
 408775,9/20/2016,9/21/2016,18998221,Contact,Customer Success,System Overview
@@ -17831,7 +17831,7 @@ Customer_id,Call_Opened,Call_Closed,Case_Number,Resolution,Call_Type,Call_Type_S
 408806,9/15/2016,9/19/2016,18969182,Contact,Customer Success,System Overview
 408807,9/14/2016,9/20/2016,18955993,Contact,Customer Success,System Overview
 408808,9/14/2016,9/15/2016,18955410,Contact,Customer Success,System Overview
-408809,9/23/2016,9/27/2016,19023203,Contact,CTCT Communication Preferences,System Overview
+408809,9/23/2016,9/27/2016,19023203,Contact, Communication Preferences,System Overview
 408810,9/15/2016,9/16/2016,18971036,Contact,Customer Success,System Overview
 408811,9/16/2016,9/20/2016,18976464,Contact,Customer Success,System Overview
 408812,9/15/2016,9/19/2016,18966641,Contact,Customer Success,System Overview
@@ -18424,7 +18424,7 @@ Customer_id,Call_Opened,Call_Closed,Case_Number,Resolution,Call_Type,Call_Type_S
 409399,2/3/2017,2/9/2017,19802030,Contact,Customer Success,System Overview
 409400,10/6/2016,10/10/2016,19097016,Contact,Customer Success,System Overview
 409401,11/2/2016,11/9/2016,19267672,Contact,Customer Success,System Overview
-409402,10/5/2016,10/6/2016,19090065,Contact,CTCT Communication Preferences,System Overview
+409402,10/5/2016,10/6/2016,19090065,Contact, Communication Preferences,System Overview
 409403,10/4/2016,10/6/2016,19083905,Contact,Customer Success,System Overview
 409404,10/4/2016,10/5/2016,19080919,Contact,Customer Success,System Overview
 409405,10/4/2016,10/13/2016,19085459,Contact,Customer Success,System Overview
