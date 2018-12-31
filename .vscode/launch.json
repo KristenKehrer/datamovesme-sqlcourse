@@ -7,12 +7,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Run Mysql Lambda",
-      "program": "${workspaceFolder}/lambda/runQuery"
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/sql/createsql.js"
     }

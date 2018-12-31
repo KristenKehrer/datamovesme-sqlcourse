@@ -14,8 +14,7 @@ import { ResultsComponent } from './browser/results/results.component'
 import { SchemaComponent } from './browser/schema/schema.component'
 import { SpinnerComponent } from './spinner/spinner.component'
 import { ResultComponent } from './browser/results/result/result.component';
-import { EditorComponent } from './browser/editor/editor.component';
-import { TestWebSqlComponent } from './test-web-sql/test-web-sql.component'
+import { EditorComponent } from './browser/editor/editor.component'
 
 @NgModule({
   declarations: [
@@ -25,8 +24,7 @@ import { TestWebSqlComponent } from './test-web-sql/test-web-sql.component'
     SchemaComponent,
     SpinnerComponent,
     ResultComponent,
-    EditorComponent,
-    TestWebSqlComponent
+    EditorComponent
   ],
   imports: [
     BrowserModule,
