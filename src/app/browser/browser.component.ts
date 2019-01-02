@@ -5,7 +5,6 @@ import { timer } from 'rxjs'
 import { SqliteService } from '../sqlite.service'
 import * as _ from 'lodash'
 import { HostListener } from '@angular/core'
-import { EditorData } from './editor/editor.component';
 
 const QUERY_KEY = 'myquery'
 
@@ -54,6 +53,7 @@ export class BrowserComponent implements OnInit {
       this.sql.runQuery(query)
         .then(results => {
           this.results = results
+
           this.error = null
         })
         .catch(e => {

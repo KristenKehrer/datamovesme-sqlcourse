@@ -9,7 +9,7 @@
     <em class="columns-label" [ngbCollapse]="table.isCollapsed">Columns:</em>
     <ul [ngbCollapse]="table.isCollapsed">
       <li *ngFor="let column of table.columns">
-        {{column.name}} <span class="column-type">{{column.type}}</span>
+        {{column.name}} <span class="column-type">{{column.type}}</span> <span class="column-type" *ngIf="column.primaryKey">(PK)</span>
       </li>
     </ul>
   </div>
