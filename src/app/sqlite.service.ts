@@ -27,11 +27,15 @@ export class SqliteService extends SqlService {
   }
 
   public async initialize(): Promise<any> {
-    const url = this.location.prepareExternalUrl(DB_URL)
-    const response = await this.httpClient.get(url, { responseType: 'arraybuffer' })
-      .toPromise()
-    const arr = new Uint8Array(response)
-    this.db = new SQL.Database(arr)
+    try {
+      const url = this.location.prepareExternalUrl(DB_URL)
+      const response = await this.httpClient.get(url, { responseType: 'arraybuffer', headers: { 'Cache-Control': 'no-cache' } })
+        .toPromise()
+      const arr = new Uint8Array(response)
+      this.db = new SQL.Database(arr)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   public async cleanup(): Promise<void> {

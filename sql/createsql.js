@@ -10,9 +10,6 @@ const CSV_DIR = path.join(__dirname, 'csvs')
 const SQL_DIR = path.join(__dirname, 'dist_sql')
 const DB_PATH = path.join(__dirname, 'sqlcourse.db')
 
-// const pks = {
-//   billedservices: []
-// }
 
 async function run() {
   const csvs = getCsvFiles()
@@ -24,46 +21,9 @@ async function run() {
     fs.writeFileSync(path.join(SQL_DIR, `${csvname.replace('.csv', '.sql')}`), sqlstring)
     await runSql(db, sqlstring)
   })
-
-  await runSql(db, `
-create table deduped_customer_table as
-select * from customer
-group by customer_id
-having count(customer_id) > 1
-order by customer_id;
-
-
-insert into deduped_customer_table
-select * from customer
-group by customer_id
-having count(customer_id) = 1;
-
-create table deduped_salescall as
-select * from salescall
-group by customer_id
-having count(customer_id) > 1
-order by customer_id;
-
-
-insert into deduped_salescall
-select * from salescall
-group by customer_id
-having count(customer_id) = 1;
-
-create table deduped_billedservices as
-select * from billedservices
-group by customer_id
-having count(customer_id) > 1
-order by customer_id;
-
-insert into deduped_billedservices
-select * from billedservices
-group by customer_id
-having count(customer_id) = 1;`)
   await db.close()
   console.log('Complete!')
 }
-
 
 async function runSql(db, sqlstring) {
   await Bluebird.map(_.split(sqlstring, ';\n'), stmt => new Bluebird((res, rej) => {

@@ -62,9 +62,8 @@ export class BrowserComponent implements OnInit {
   ngOnInit() {
     this.sql.initialize()
     if (this.dbType === 'sqlite') {
-      this.sqlapi.initialize()
-        .then(() => this.sqlapi.ping())
-        .then(up => this.sqlapiAvailable = up)
+      //this.sqlapi.ping()
+      //  .then(up => this.sqlapiAvailable = up)
     }
   }
 
