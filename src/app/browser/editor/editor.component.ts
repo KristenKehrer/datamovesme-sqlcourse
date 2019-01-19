@@ -17,10 +17,6 @@ export interface EditorData {
 export class EditorComponent implements OnInit {
 
   constructor(private modalService: NgbModal) {
-    this.loadData()
-    if (this.data.length > 0) {
-      this.activeTabId = this.data[0].title
-    }
   }
 
   @Output() queryChanged = new EventEmitter<string>()
@@ -37,12 +33,37 @@ export class EditorComponent implements OnInit {
 
   loadData(): void {
     const dataString = localStorage.getItem(QUERY_KEY)
-    if (dataString) {
-      this.data = JSON.parse(dataString)
+    const parsed = this.parseQuery(dataString)
+    if (parsed) {
+      this.data = parsed
     } else {
-      this.data = []
+      this.data = [{ title: 'untitled-1', text: '' }]
     }
+    this.activeTabId = this.data[0].title
+    this.saveData()
+    this.queryChanged.next(this.data[0].text)
+  }
 
+
+  parseQuery(q: string): EditorData[] {
+    if (!q) {
+      return null
+    }
+    try {
+      const parsed = JSON.parse(q)
+      if (!(parsed instanceof Array)) {
+        throw new Error()
+      }
+      if (parsed.length === 0) {
+        throw new Error()
+      }
+      if (!_.every(parsed, (p: any) => 'title' in p && 'text' in p)) {
+        throw new Error()
+      }
+      return parsed
+    } catch {
+      return null
+    }
   }
 
   saveData(): void {
@@ -50,11 +71,7 @@ export class EditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data && this.data.length === 0) {
-      this.data.push({ title: 'untitled-1', text: '' })
-    }
-    this.activeTabId = this.data[0].title
-    this.queryChanged.next(this.data[0].text)
+    this.loadData()
   }
 
   addTab(event: MouseEvent) {
@@ -66,6 +83,7 @@ export class EditorComponent implements OnInit {
     } while (!_.isNil(existingTab))
     this.data.push({ title: `untitled-${tabNum}`, text: '' })
     this.activeTabId = _.last(this.data).title
+    this.saveData()
     this.queryChanged.next("")
   }
 
@@ -83,9 +101,13 @@ export class EditorComponent implements OnInit {
   editTitle(data: EditorData, modalContent) {
     this.editingTitle = data.title
     this.modalService.open(modalContent).result.then(result => {
-      data.title = result
-      this.saveData()
-      this.activeTabId = data.title
+      if (_.find(this.data, (d: EditorData) => d.title === result && d !== data)) {
+        alert('You can\'t have duplicate tab names!')
+      } else {
+        data.title = result
+        this.saveData()
+        this.activeTabId = data.title
+      }
     }).catch(reason => { })
   }
 
@@ -96,5 +118,8 @@ export class EditorComponent implements OnInit {
       this.data.push({ title: 'untitled-1', text: '' })
     }
     this.activeTabId = this.data[0].title
+    this.queryChanged.next(this.data[0].text)
+    this.saveData()
   }
+
 }
