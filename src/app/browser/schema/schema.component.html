@@ -1,4 +1,4 @@
-<span *ngIf="!schema">Loading schema... <app-spinner></app-spinner></span>
+<span *ngIf="!schema">Loading schema... <app-spinner position="fixed"></app-spinner></span>
 <ng-container *ngIf="schema">
   <h4>Tables</h4>
   <div *ngFor="let table of schema" class="table-section" (click)="table.isCollapsed = !table.isCollapsed">

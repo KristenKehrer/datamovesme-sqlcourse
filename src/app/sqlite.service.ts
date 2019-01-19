@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { DBResult } from './types/dbResult'
 import { Location } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
+import { SqlService } from './sql-service';
 
 declare const SQL: any
 
@@ -10,32 +11,34 @@ const DB_URL = '/assets/sqlcourse.db'
 @Injectable({
   providedIn: 'root'
 })
-export class SqliteService {
+export class SqliteService extends SqlService {
 
-  private db: Promise<any>
+  private db: any
 
   constructor(
     private location: Location,
     private httpClient: HttpClient) {
-    this.db = this.retrieveDB()
+    super()
   }
 
   async runQuery(query: string): Promise<DBResult> {
-    const db = await this.db
-    const rowSets = db.exec(query)
+    const rowSets = this.db.exec(query)
     return { query, rowSets }
   }
 
-  private async retrieveDB(): Promise<any> {
+  public async initialize(): Promise<any> {
     const url = this.location.prepareExternalUrl(DB_URL)
     const response = await this.httpClient.get(url, { responseType: 'arraybuffer' })
       .toPromise()
     const arr = new Uint8Array(response)
-    return new SQL.Database(arr)
+    this.db = new SQL.Database(arr)
+  }
+
+  public async cleanup(): Promise<void> {
+    // do nothing for sqlite
   }
 
   async export(): Promise<any> {
-    const db = await this.db
-    return db.export()
+    return this.db.export()
   }
 }

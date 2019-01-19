@@ -11,8 +11,6 @@ ngb-tabset {
   flex-direction: column;
 }
 
-
-
 :host /deep/ .CodeMirror {
   border: 1.5px solid gray;
   border-radius: 5px;
@@ -33,6 +31,9 @@ ngb-tabset {
 
 :host /deep/ .nav {
   flex: 0 0 auto;
+}
+:host /deep/ .nav-link.disabled {
+  pointer-events: all;
 }
 
 .plus-link {

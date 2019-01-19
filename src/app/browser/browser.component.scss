@@ -5,8 +5,14 @@
   align-items: center;
 }
 
+.heading {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+}
+
 .top-panel {
-  min-height:100px;
+  min-height:200px;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -31,9 +37,7 @@ app-schema, .spacer {
   overflow: auto;
 }
 
-ngb-tabset {
-  height: 100%;
-}
+
 
 .buttons {
   display: flex;
@@ -47,20 +51,27 @@ ngb-tabset {
   margin-left: 10px;
 }
 
-as-split {
-  height: 100vh;
-}
-
 img {
   flex: 0 0 auto;
-  height: 150px;
+  width: 350px;
+  height: 100px;
   margin-top: -15px;
+  object-fit: cover;
 }
 
 h3 {
-  margin-top: -20px;
+  line-height: 80px;
 }
+
 
 app-spinner {
   margin-top: 5px;
+}
+
+.change-type-link {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0px 10px;
+  font-size: 12px;
 }

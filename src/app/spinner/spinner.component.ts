@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 
 @Component({
   selector: 'app-spinner',
@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core'
 export class SpinnerComponent implements OnInit {
 
   constructor() { }
+
+  @Input() position = 'relative'
 
   ngOnInit() {
   }

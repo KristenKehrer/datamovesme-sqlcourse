@@ -1,8 +1,11 @@
-<img src="https://datamovesme.com/wp-content/uploads/2018/06/cropped-logo-2.png">
-<h3 style="text-align: center">SQLite Browser</h3>
+<div class="heading">
+  <img src="https://datamovesme.com/wp-content/uploads/2018/06/cropped-logo-2.png">
+  <h3 *ngIf="dbType === 'sqlite'">SQLite Browser</h3>
+  <h3 *ngIf="dbType === 'mysql'" style="color:rgb(68, 121, 161)">MySql Browser</h3>
+</div>
 <as-split direction="vertical">
   <as-split-area size="40" class="top-panel">
-    <app-schema></app-schema>
+    <app-schema *ngIf="dbType" [type]="dbType"></app-schema>
     <div class="editor">
       <app-editor (queryChanged)="onQueryChanged($event)"></app-editor>
       <div class="buttons">
@@ -30,5 +33,9 @@
     </div>
     <app-results *ngIf="results" [results]="results">
     </app-results>
+    <div class="change-type-link">
+      <a *ngIf="dbType === 'sqlite' && sqlapiAvailable" [routerLink]="['/mysql']">try new mysql mode! (experimental)</a>
+      <a *ngIf="dbType === 'mysql'" [routerLink]="['/']">back to sqlite mode</a>
+    </div>
   </as-split-area>
 </as-split>

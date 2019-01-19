@@ -1,25 +1,42 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
 import { DBResult } from '../types/dbResult'
-import * as FileSaver from 'file-saver'
 import { timer } from 'rxjs'
 import { SqliteService } from '../sqlite.service'
 import * as _ from 'lodash'
 import { HostListener } from '@angular/core'
+import { SqlService } from '../sql-service';
+import { SqlapiService } from '../sqlapi.service';
+import { ActivatedRoute } from '@angular/router';
 
 const QUERY_KEY = 'myquery'
 
 @Component({
   selector: 'app-browser',
   templateUrl: './browser.component.html',
-  styleUrls: ['./browser.component.scss']
+  styleUrls: ['./browser.component.scss'],
 })
 export class BrowserComponent implements OnInit {
 
+  private sql: SqlService
+  dbType: string
+  sqlapiAvailable: boolean
+
   constructor(
-    private sql: SqliteService,
-    private changeDetector: ChangeDetectorRef) {
-    this.query = this.loadQuery() || 'select * from customer limit 10;'
-    timer(0, 1000).subscribe(() => this.saveQuery())
+    sqlite: SqliteService,
+    private sqlapi: SqlapiService,
+    private changeDetector: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute) {
+
+    this.sql = sqlapi
+    this.activatedRoute.url.subscribe(urlSegments => {
+      if (urlSegments.length === 1 && urlSegments[0].path === "mysql") {
+        this.sql = sqlapi;
+        this.dbType = "mysql"
+      } else {
+        this.sql = sqlite;
+        this.dbType = "sqlite"
+      }
+    })
   }
 
   query: string
@@ -43,7 +60,12 @@ export class BrowserComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.run()  // uncomment this and the app will execute the saved query on startup
+    this.sql.initialize()
+    if (this.dbType === 'sqlite') {
+      this.sqlapi.initialize()
+        .then(() => this.sqlapi.ping())
+        .then(up => this.sqlapiAvailable = up)
+    }
   }
 
   runQuery(query: string): void {
@@ -76,18 +98,5 @@ export class BrowserComponent implements OnInit {
     } else {
       this.run()
     }
-  }
-
-  async export() {
-    const exported = await this.sql.export()
-    FileSaver.saveAs(new Blob([exported]), 'sqlite.db')
-  }
-
-  private saveQuery(): void {
-    localStorage.setItem(QUERY_KEY, this.query)
-  }
-
-  private loadQuery(): string {
-    return localStorage.getItem(QUERY_KEY)
   }
 }

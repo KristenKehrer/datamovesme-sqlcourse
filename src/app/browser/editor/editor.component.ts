@@ -53,9 +53,11 @@ export class EditorComponent implements OnInit {
     if (this.data && this.data.length === 0) {
       this.data.push({ title: 'untitled-1', text: '' })
     }
+    this.activeTabId = this.data[0].title
+    this.queryChanged.next(this.data[0].text)
   }
 
-  addTab() {
+  addTab(event: MouseEvent) {
     let tabNum = 0
     let existingTab
     do {
@@ -63,6 +65,8 @@ export class EditorComponent implements OnInit {
       existingTab = _.find(this.data, (t: EditorData) => t.title === `untitled-${tabNum}`)
     } while (!_.isNil(existingTab))
     this.data.push({ title: `untitled-${tabNum}`, text: '' })
+    this.activeTabId = _.last(this.data).title
+    this.queryChanged.next("")
   }
 
   textChange(data: EditorData, text: string) {
@@ -73,6 +77,7 @@ export class EditorComponent implements OnInit {
 
   onTabChange(event: NgbTabChangeEvent) {
     this.activeTabId = event.nextId
+    this.queryChanged.next(_.find(this.data, ed => ed.title === this.activeTabId).text)
   }
 
   editTitle(data: EditorData, modalContent) {

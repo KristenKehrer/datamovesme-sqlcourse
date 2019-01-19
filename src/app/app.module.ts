@@ -14,7 +14,7 @@ import { ResultsComponent } from './browser/results/results.component'
 import { SchemaComponent } from './browser/schema/schema.component'
 import { SpinnerComponent } from './spinner/spinner.component'
 import { ResultComponent } from './browser/results/result/result.component';
-import { EditorComponent } from './browser/editor/editor.component'
+import { EditorComponent } from './browser/editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { EditorComponent } from './browser/editor/editor.component'
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    AngularSplitModule,
+    AngularSplitModule.forRoot(),
     NgbModule,
     CodemirrorModule,
     AgGridModule.withComponents([])

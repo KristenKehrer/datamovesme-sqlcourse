@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { SqliteService } from 'src/app/sqlite.service'
 import * as _ from 'lodash'
 import * as Bluebird from 'bluebird'
+import { SqlapiService } from 'src/app/sqlapi.service';
 
-interface SqliteColumn {
+export interface ColumnDefinition {
   name: string
   type: string
   notNull: boolean
   primaryKey: boolean
 }
 
-interface SqliteTable {
+export interface TableDefinition {
   name: string
   rowCount: number
-  columns: SqliteColumn[]
+  columns: ColumnDefinition[]
 
   isCollapsed: boolean
 }
@@ -25,14 +26,27 @@ interface SqliteTable {
 })
 export class SchemaComponent implements OnInit {
 
-  schema: SqliteTable[]
+  schema: TableDefinition[]
 
-  constructor(private sql: SqliteService) {
-    this.loadSchema()
+  constructor(
+    private sqlite: SqliteService,
+    private sqlapi: SqlapiService) {
+
     //this.schema = []
   }
 
-  private async loadSchema() {
+  @Input() type: "sqlite" | "mysql"
+
+  ngOnInit() {
+    console.log(`Loading ${this.type} schema...`)
+    if (this.type === "sqlite") {
+      this.sqlite.initialize().then(() => this.loadSqliteSchema())
+    } else if (this.type === "mysql") {
+      this.sqlapi.initialize().then(async () => this.schema = await this.sqlapi.getSchema())
+    }
+  }
+
+  private async loadSqliteSchema() {
     const tableNames = await this.loadTableNames()
     this.schema = await Bluebird.map(tableNames, async (tableName: string) => {
       const columns = await this.loadTableColumns(tableName)
@@ -42,18 +56,18 @@ export class SchemaComponent implements OnInit {
   }
 
   private async loadTableNames(): Promise<string[]> {
-    const results = await this.sql.runQuery("select name from sqlite_master where type = 'table'")
+    const results = await this.sqlite.runQuery("select name from sqlite_master where type = 'table'")
     return _.map(results.rowSets[0].values, r => r[0])
   }
 
   private async loadTableRowCount(tableName: string): Promise<number> {
-    const rowCountResult = await this.sql.runQuery(`select count(*) from ${tableName}`)
+    const rowCountResult = await this.sqlite.runQuery(`select count(*) from ${tableName}`)
     return _.toNumber(rowCountResult.rowSets[0].values[0])
   }
 
-  private async loadTableColumns(tableName: string): Promise<SqliteColumn[]> {
+  private async loadTableColumns(tableName: string): Promise<ColumnDefinition[]> {
 
-    const columnsReult = await this.sql.runQuery(`PRAGMA table_info(${tableName})`)
+    const columnsReult = await this.sqlite.runQuery(`PRAGMA table_info(${tableName})`)
     const rows = columnsReult.rowSets[0].values
     return _.map(rows, row => ({
       name: row[1].toString(),
@@ -62,8 +76,4 @@ export class SchemaComponent implements OnInit {
       primaryKey: row[5] === 1
     }))
   }
-
-  ngOnInit() {
-  }
-
 }
