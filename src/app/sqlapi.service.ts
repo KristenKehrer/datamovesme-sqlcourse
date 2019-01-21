@@ -21,13 +21,14 @@ interface QueryResponse {
 }
 
 interface ResultSet {
-  query: string,
-  status: number,
+  query: string
+  status: number
   result: SqlApiResult
 }
 
 interface SqlApiResult {
-  columnNames: string[],
+  rowCount: number
+  columnNames: string[]
   rows: any[][]
 }
 
@@ -70,6 +71,7 @@ export class SqlapiService extends SqlService {
     const result: DBResult = {
       query: response.text,
       rowSets: _.map(resultSets, rs => (<RowSet>{
+        rowCount: rs.result.rowCount,
         columns: rs.result.columnNames,
         values: rs.result.rows
       }))

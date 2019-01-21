@@ -1,4 +1,5 @@
 export interface RowSet {
+  rowCount: number
   columns: string[]
   values: any[][]
 }

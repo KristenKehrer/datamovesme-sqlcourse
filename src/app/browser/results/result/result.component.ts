@@ -25,9 +25,9 @@ export class ResultComponent implements OnInit {
   @Input() set data(data: RowSet) {
     this.rowData = this.makeRowData(data)
     this.colDefs = this.makeColDefs(data)
-    this.rowCount = data.values.length
-    if (this.rowCount > MAX_RESULTS) {
-      this.missingRows = this.rowCount - MAX_RESULTS
+    this.rowCount = data.rowCount
+    if (this.rowCount > data.values.length) {
+      this.missingRows = this.rowCount - data.values.length
     }
   }
 
@@ -45,7 +45,7 @@ export class ResultComponent implements OnInit {
 
   private makeRowData(data: RowSet): any[] {
     const gridRows = []
-    _.each(_.take(data.values, MAX_RESULTS), (row: any[], index: number) => {
+    _.each(data.values, (row: any[], index: number) => {
       const gridRow: any = {}
       _.each(data.columns, (col: string, index: number) => {
         gridRow[col] = row[index]

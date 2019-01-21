@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
-import { DBResult } from './types/dbResult'
+import { DBResult, RowSet } from './types/dbResult'
 import { Location } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { SqlService } from './sql-service';
+import * as _ from 'lodash'
 
 declare const SQL: any
 
@@ -23,6 +24,10 @@ export class SqliteService extends SqlService {
 
   async runQuery(query: string): Promise<DBResult> {
     const rowSets = this.db.exec(query)
+    _.each(rowSets, (rs: RowSet) => {
+      rs.rowCount = rs.values.length
+      rs.values = _.take(rs.values, 20000)
+    })
     return { query, rowSets }
   }
 
