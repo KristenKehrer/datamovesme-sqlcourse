@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  sgak: 'MwPZTDifrPVS-EyL8w.mUC5FHH5RuvXUoR7aVm4tom_1VCWDJJs'
+  sqlapiUrl: "https://sqlapi.pkehrer.click"
 }
 
 /*
