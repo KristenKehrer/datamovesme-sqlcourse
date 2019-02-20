@@ -43,6 +43,7 @@ export class BrowserComponent implements OnInit {
   error: string
   results: DBResult
   running = false
+  sqlReady = false
 
   onQueryChanged(query: string) {
     this.query = query
@@ -60,13 +61,16 @@ export class BrowserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sql.initialize()
+    this.sql.initialize().then(() => this.sqlReady = true)
     if (this.dbType === 'sqlite') {
       this.sqlapi.ping().then(up => this.sqlapiAvailable = up)
     }
   }
 
   runQuery(query: string): void {
+    if (!this.sqlReady) {
+      return
+    }
     this.running = true
     this.changeDetector.detectChanges()
     setTimeout(() => {
