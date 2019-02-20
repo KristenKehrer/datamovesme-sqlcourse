@@ -1,11 +1,10 @@
+
+
+:host /deep/ .tab-content, 
+:host /deep/ .tab-pane, 
+ngx-codemirror,
 :host,
 ngb-tabset {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-:host /deep/ .tab-content, :host /deep/ .tab-pane, ngx-codemirror {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -18,6 +17,7 @@ ngb-tabset {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  height: auto;
 }
 
 :host /deep/ .CodeMirror-scroll {
