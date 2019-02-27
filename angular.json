@@ -35,7 +35,8 @@
               "node_modules/ag-grid-community/dist/styles/ag-theme-blue.css"
             ],
             "scripts": [
-              "node_modules/sql.js/js/sql.js"
+              "node_modules/sql.js/js/sql.js",
+              "node_modules/jszip/dist/jszip.js"
             ]
           },
           "configurations": {

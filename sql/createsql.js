@@ -21,6 +21,7 @@ async function run() {
     fs.writeFileSync(path.join(SQL_DIR, `${csvname.replace('.csv', '.sql')}`), sqlstring)
     await runSql(db, sqlstring)
   })
+  await runSql(db, 'VACUUM')
   await db.close()
   console.log('Complete!')
 }
@@ -55,7 +56,7 @@ function getCsvFiles() {
 async function getTableSchema(csvName) {
   const csvjson = await loadCsv(path.join(CSV_DIR, csvName))
   const columns = _.map(_.keys(csvjson[0]), columnName => {
-    sqlColName = columnName.replace(' ', '')
+    const sqlColName = columnName.replace(' ', '')
     const pkString = columnName.toLowerCase() === 'customer_idXXXX' ? ' PRIMARY KEY' : ''
     const dataValue = _.find(csvjson, row => !_.isNil(row[columnName]))[columnName]
     if (isNotANumber(dataValue)) {

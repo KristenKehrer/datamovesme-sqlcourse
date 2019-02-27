@@ -6,6 +6,7 @@ import { SqlService } from './sql-service';
 import * as _ from 'lodash'
 
 declare const SQL: any
+declare const JSZip: any
 
 const DB_URL = '/assets/sqlcourse.db'
 
@@ -31,13 +32,31 @@ export class SqliteService extends SqlService {
     return { query, rowSets }
   }
 
-  public async initialize(): Promise<any> {
+  private initializePromise: Promise<any>
+
+  public initialize(): Promise<any> {
+    if (!this.initializePromise) {
+      this.initializePromise = this.doInitialize()
+    }
+    return this.initializePromise
+  }
+
+  private async doInitialize(): Promise<any> {
     try {
-      const url = this.location.prepareExternalUrl(DB_URL)
-      const response = await this.httpClient.get(url, { responseType: 'arraybuffer', headers: { 'Cache-Control': 'no-cache' } })
+      console.time('download zip')
+      const url = this.location.prepareExternalUrl(DB_URL + ".zip")
+      const arraybuff = await this.httpClient.get(url, { responseType: 'arraybuffer', headers: { 'Cache-Control': 'no-cache' } })
         .toPromise()
-      const arr = new Uint8Array(response)
-      this.db = new SQL.Database(arr)
+      console.timeEnd('download zip')
+
+
+      console.time('extract zip')
+      const zip = await JSZip.loadAsync(arraybuff)
+      const dbfile = await zip.file('sqlcourse.db').async("uint8array")
+      console.timeEnd('extract zip')
+      console.time('load db')
+      this.db = new SQL.Database(dbfile)
+      console.timeEnd('load db')
     } catch (error) {
       console.log(error)
     }

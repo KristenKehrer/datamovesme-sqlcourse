@@ -1,6 +1,8 @@
 sql/dist_sql
 sql/*.db
+sql/*.db.zip
 src/assets/sqlcourse.db
+src/assets/sqlcourse.db.zip
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
